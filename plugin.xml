@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+           id="cordova-iclouddocstorage-plugin"
+      version="0.0.1">
+
+    <name>iCloudDocumentStorage</name>
+    <description>Cordova iCloud Document Storage Plugin</description>
+    <author>Rich Browne</author>
+    <license>MIT</license>
+    <keywords>cordova,icloud,ios</keywords>
+    <repo>https://github.com/nero120/cordova-iclouddocstorage-plugin</repo>
+
+    <engines>
+        <engine name="cordova" version=">=3.0.0" />
+    </engines>
+
+    <js-module src="www/iCloudDocStorage.js" name="iCloudDocStorage">
+        <clobbers target="iCloudDocStorage" />
+    </js-module>
+
+    <!-- ios -->
+    <platform name="ios">
+        <config-file target="config.xml" parent="/*">
+            <feature name="iCloudDocStorage">
+                <param name="ios-package" value="iCloudDocStorage"/>
+            </feature>
+        </config-file>
+        
+        <header-file src="src/ios/iCloudDocStorage.h"/>
+        <source-file src="src/ios/iCloudDocStorage.swift" />
+
+        <dependency id="cordova-plugin-add-swift-support" version="1.7.0"/>
+    </platform>
+</plugin>
