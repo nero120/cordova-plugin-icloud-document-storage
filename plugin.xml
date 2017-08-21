@@ -27,7 +27,7 @@
             </feature>
         </config-file>
         
-        <header-file src="src/ios/iCloudDocStorage.h"/>
+        <header-file src="src/ios/iCloudDocStorage-Bridging-Header.h"/>
         <source-file src="src/ios/iCloudDocStorage.swift" />
 
         <dependency id="cordova-plugin-add-swift-support" version="1.7.0"/>
