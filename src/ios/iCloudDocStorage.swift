@@ -9,8 +9,8 @@
         self.ubiquitousContainerID = command.arguments[0] as? String
         
         // If user is not signed into iCloud, return error
-        if ((FileManager.default.ubiquityIdentityToken) == nil) {
-            self.commandDelegate!.send(
+        if (FileManager.default.ubiquityIdentityToken == nil) {
+            return self.commandDelegate!.send(
                 CDVPluginResult(
                     status: CDVCommandStatus_ERROR
                 ),
