@@ -1,16 +1,16 @@
 {
-  "name": "cordova-plugin-iclouddocstorage",
+  "name": "cordova-plugin-icloud-document-storage",
   "version": "0.0.1",
   "description": "Cordova iCloud Document Storage Plugin",
   "cordova": {
-    "id": "cordova-plugin-iclouddocstorage",
+    "id": "cordova-plugin-icloud-document-storage",
     "platforms": [
       "ios"
     ]
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/nero120/cordova-plugin-iclouddocstorage"
+    "url": "https://github.com/nero120/cordova-plugin-icloud-document-storage"
   },
   "keywords": [
     "cordova",
@@ -28,7 +28,7 @@
   "author": "Rich Browne",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/nero120/cordova-plugin-iclouddocstorage/issues"
+    "url": "https://github.com/nero120/cordova-plugin-icloud-document-storage/issues"
   },
-  "homepage": "https://github.com/nero120/cordova-plugin-iclouddocstorage"
+  "homepage": "https://github.com/nero120/cordova-plugin-icloud-document-storage"
 }

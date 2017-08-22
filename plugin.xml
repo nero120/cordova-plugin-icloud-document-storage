@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
-           id="cordova-plugin-iclouddocstorage"
+           id="cordova-plugin-icloud-document-storage"
       version="0.0.1">
 
     <name>iCloudDocumentStorage</name>
@@ -9,7 +9,7 @@
     <author>Rich Browne</author>
     <license>MIT</license>
     <keywords>cordova,icloud,ios</keywords>
-    <repo>https://github.com/nero120/cordova-plugin-iclouddocstorage</repo>
+    <repo>https://github.com/nero120/cordova-plugin-icloud-document-storage</repo>
 
     <engines>
         <engine name="cordova" version=">=3.0.0" />
