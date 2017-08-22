@@ -1,39 +1,51 @@
 @objc(iCloudDocStorage) class iCloudDocStorage : CDVPlugin {
+    var pluginResult: CDVPluginResult?
+    var ubiquitousContainerID: String?
     var ubiquitousContainerURL: URL?
     
+    // initUbiquitousContainer: Checks user is signed into iCloud and initialises the desired ubiquitous container.
     @objc(initUbiquitousContainer:)
     func initUbiquitousContainer(command: CDVInvokedUrlCommand) {
+        self.ubiquitousContainerID = command.arguments[0] as? String
+        
+        // If user is not signed into iCloud, return error
+        if ((FileManager.default.ubiquityIdentityToken) == nil) {
+            self.commandDelegate!.send(
+                CDVPluginResult(
+                    status: CDVCommandStatus_ERROR
+                ),
+                callbackId: command.callbackId
+            )
+        }
+        
         DispatchQueue.global(qos: .userInitiated).async {
-            let containerId = command.arguments[0] as? String
-            var pluginResult: CDVPluginResult
-            
             // Initialise and store the ubiquitous container url
-            self.ubiquitousContainerURL = self.getUbiquitousContainerURL(containerId)
+            self.ubiquitousContainerURL = self.getUbiquitousContainerURL(self.ubiquitousContainerID)
             
             if (self.ubiquitousContainerURL != nil) {
                 NSLog((self.ubiquitousContainerURL?.absoluteString)!)
                 
-                pluginResult = CDVPluginResult(
+                self.pluginResult = CDVPluginResult(
                     status: CDVCommandStatus_OK
                 )
             }
             else {
-                pluginResult = CDVPluginResult(
+                self.pluginResult = CDVPluginResult(
                     status: CDVCommandStatus_ERROR
                 )
             }
             
             self.commandDelegate!.send(
-                pluginResult,
+                self.pluginResult,
                 callbackId: command.callbackId
             )
         }
     }
     
+    
+    // syncToCloud: Sends the file at the given local URL to the ubiquitous container for syncing to iCloud.
     @objc(syncToCloud:)
     func syncToCloud(command: CDVInvokedUrlCommand) {
-        var pluginResult: CDVPluginResult?
-        
         // Get the file to sync's url
         let fileURLArg = command.arguments[0] as? String
         
@@ -46,7 +58,7 @@
             DispatchQueue.global(qos: .userInitiated).async {
                 // Initialise and store the ubiquitous container url if necessary
                 if (self.ubiquitousContainerURL == nil) {
-                    self.ubiquitousContainerURL = self.getUbiquitousContainerURL(nil)
+                    self.ubiquitousContainerURL = self.getUbiquitousContainerURL(self.ubiquitousContainerID)
                 }
                 
                 // Get the destination URL of the file within the iCloud ubiquitous container
@@ -61,18 +73,18 @@
                         itemAt: fileURL!,
                         destinationURL: fileUrlInUbiquitousContainer!)
                     
-                    pluginResult = CDVPluginResult(
+                    self.pluginResult = CDVPluginResult(
                         status: CDVCommandStatus_OK
                     )
                 }
                 catch {
-                    pluginResult = CDVPluginResult(
+                    self.pluginResult = CDVPluginResult(
                         status: CDVCommandStatus_ERROR
                     )
                 }
                 
                 self.commandDelegate!.send(
-                    pluginResult,
+                    self.pluginResult,
                     callbackId: command.callbackId
                 )
             }
@@ -87,6 +99,8 @@
         }
     }
     
+    
+    // getUbiquitousContainerURL: Initialises the ubiquitous container at the given container ID (or default if nil) and returns it's local URL.
     private func getUbiquitousContainerURL(_ containerId: String?) -> URL {
         return FileManager.default.url(forUbiquityContainerIdentifier: containerId)!
     }
